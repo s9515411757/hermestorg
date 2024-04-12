@@ -100,6 +100,7 @@ class Card(models.Model):
         Ip,
         related_name="card_views",
         blank=True,
+        verbose_name="Просмотр",
         help_text="IP адрес, который просмотрел карточку товара"
     )
     address = models.CharField(
