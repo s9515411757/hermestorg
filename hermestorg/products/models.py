@@ -91,7 +91,7 @@ class Card(models.Model):
     )
     author = models.ForeignKey(
         User,
-        on_delete=models.CASCADE,
+        on_delete=models.PROTECT,
         related_name='posts',
         verbose_name='Автор',
         help_text="Автор поста"
@@ -110,7 +110,7 @@ class Card(models.Model):
     )
     currency = models.ForeignKey(
         Сurrency,
-        on_delete=models.SET_NULL,
+        on_delete=models.PROTECT,
         blank=True,
         null=True,
         related_name='currency',
@@ -222,13 +222,13 @@ class Rating(models.Model):
     )
     star = models.ForeignKey(
         RatingStar,
-        on_delete=models.CASCADE,
+        on_delete=models.PROTECT,
         verbose_name="Звезда рейтинга",
         help_text="Звезда рейтинга"
     )
     card = models.ForeignKey(
         Card,
-        on_delete=models.CASCADE,
+        on_delete=models.PROTECT,
         verbose_name="Продукт",
         help_text="Продукт"
     )
@@ -255,11 +255,11 @@ class Comment(models.Model):
         related_name='comments',
         verbose_name='Комментарий продукта',
         help_text='Комментарий продукта',
-        on_delete=models.CASCADE,
+        on_delete=models.PROTECT,
     )
     author = models.ForeignKey(
         User,
-        on_delete=models.CASCADE,
+        on_delete=models.PROTECT,
         related_name='comments',
         verbose_name='Автор комментария',
         help_text='Автор комментария',

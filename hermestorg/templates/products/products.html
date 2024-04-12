@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1 class="display-1">Продукт</h1>
+<br>
+<article>
+   <ul>
+      <li>
+        {{ card.title }}
+      </li>
+      <li>
+         {{ card.slug }}
+      </li>
+       <li>
+         {{ card.description }}
+      </li>
+      <li>
+          {{ card.category }}
+      </li>
+       <li>
+           {{ card.price }}
+      </li>
+      <li>
+          {{ card.author }}
+      </li>
+       <li>
+           {% for i in card.number_of_views.all %}
+           {{ i }}
+           {% endfor %}
+      </li>
+       <li>
+           {{ card.number_of_views.all|length }}
+      </li>
+      <li>
+          {{ card.address }}
+      </li>
+       <li>
+           {{ card.currency }}
+      </li>
+      <li>
+          {{ card.published }}
+      </li>
+       <li>
+           {{ card.moderation }}
+      </li>
+      <li>
+          {{ card.pub_date }}
+      </li>
+       <li>
+           {{ card.pub_date_now }}
+      </li>
+      <li>
+          {{ card.meta }}
+      </li>
+   </ul>
+</article>
+
+<form action="{% url 'products:add_rating' %}" method="post" name="rating">
+    <b>Рейтинг:</b>
+    {% csrf_token %}
+    <input type="hidden" value="{{ card.id }}" name="card">
+    <span class="rating">
+        {% for k, v in star_form.fields.star.choices %}
+            <input id="rating{{ v }}" type="radio" name="star"
+                   value="{{ k }}">
+            <label for="rating{{ v }}">{{ k }}</label>
+        {% endfor %}
+    </span>
+    <span class="editContent">{{ rating }}</span>
+</form>
+
+    <script>
+const rating = document.querySelector('form[name=rating]');
+
+rating.addEventListener("change", function (e) {
+    // Получаем данные из формы
+    let data = new FormData(this);
+    fetch(`${this.action}`, {
+        method: 'POST',
+        body: data
+    })
+        .then(response => alert("Рейтинг установлен"))
+        .catch(error => alert("Ошибка"))
+});
+
+    </script>
+
+{% endblock %}
