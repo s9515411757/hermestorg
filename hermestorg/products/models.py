@@ -24,6 +24,14 @@ class Сurrency(models.Model):
         blank=True,
         null=True
     )
+    pub_date = models.DateTimeField(
+        verbose_name='Создано',
+        auto_now_add=True
+    )
+    pub_date_now = models.DateTimeField(
+        verbose_name='Обновлено',
+        auto_now=True
+    )
 
     def __str__(self):
         return self.name_currency
@@ -35,6 +43,14 @@ class Сurrency(models.Model):
 
 class Ip(models.Model):
     ip = models.CharField(max_length=15)
+    pub_date = models.DateTimeField(
+        verbose_name='Создано',
+        auto_now_add=True
+    )
+    pub_date_now = models.DateTimeField(
+        verbose_name='Обновлено',
+        auto_now=True
+    )
 
     def __str__(self):
         return self.ip
@@ -110,9 +126,19 @@ class Card(models.Model):
         verbose_name='Флаг публикации(модерации)',
         help_text="Публикуем ли объявление или нет"
     )
-
-    pub_date = models.DateTimeField(auto_now_add=True)
-    pub_date_now = models.DateTimeField(auto_now=True)
+    pub_date = models.DateTimeField(
+        verbose_name='Создано',
+        auto_now_add=True
+    )
+    pub_date_now = models.DateTimeField(
+        verbose_name='Обновлено',
+        auto_now=True
+    )
+    meta = models.CharField(
+        max_length=1024,
+        verbose_name="Мета",
+        help_text="Мета JSON"
+    )
 
     def __str__(self):
         return self.title
@@ -141,6 +167,14 @@ class Category(MPTTModel):
         verbose_name="Название категории",
         help_text="Укажите название латиницей"
     )
+    pub_date = models.DateTimeField(
+        verbose_name='Создано',
+        auto_now_add=True
+    )
+    pub_date_now = models.DateTimeField(
+        verbose_name='Обновлено',
+        auto_now=True
+    )
 
     class MPTTMeta:
         order_insertion_by = ['title']
@@ -162,6 +196,14 @@ class Category(MPTTModel):
 
 class RatingStar(models.Model):
     value = models.SmallIntegerField("Значение", default=0)
+    pub_date = models.DateTimeField(
+        verbose_name='Создано',
+        auto_now_add=True
+    )
+    pub_date_now = models.DateTimeField(
+        verbose_name='Обновлено',
+        auto_now=True
+    )
 
     def __str__(self):
         return f'{self.value}'
@@ -188,6 +230,14 @@ class Rating(models.Model):
         on_delete=models.CASCADE,
         verbose_name="Продукт",
         help_text="Продукт"
+    )
+    pub_date = models.DateTimeField(
+        verbose_name='Создано',
+        auto_now_add=True
+    )
+    pub_date_now = models.DateTimeField(
+        verbose_name='Обновлено',
+        auto_now=True
     )
 
     def __str__(self):
@@ -218,8 +268,14 @@ class Comment(models.Model):
         verbose_name='Текст комментария',
         help_text='Текст комментария',
     )
-    pub_date = models.DateTimeField(auto_now_add=True)
-    pub_date_now = models.DateTimeField(auto_now=True)
+    pub_date = models.DateTimeField(
+        verbose_name='Создано',
+        auto_now_add=True
+    )
+    pub_date_now = models.DateTimeField(
+        verbose_name='Обновлено',
+        auto_now=True
+    )
 
     def __str__(self):
         return self.text[:self.CONSTANT_STR]
