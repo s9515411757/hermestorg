@@ -41,6 +41,10 @@ INSTALLED_APPS = [
     'home.apps.HomeConfig',
     'users.apps.UsersConfig',
     'sorl.thumbnail',
+    'products.apps.ProductsConfig',
+    'about.apps.AboutConfig',
+    'administrator.apps.AdministratorConfig',
+    'mptt',
 ]
 
 MIDDLEWARE = [

@@ -5,9 +5,10 @@
         </a>
 
         <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-          <li><a href="#" class="nav-link px-2 link-secondary">Overview</a></li>
-          <li><a href="#" class="nav-link px-2 link-body-emphasis">Inventory</a></li>
-          <li><a href="#" class="nav-link px-2 link-body-emphasis">Customers</a></li>
+          <li><a href="{% url 'home:index' %}" class="nav-link px-2 link-secondary">Главная страница</a></li>
+          <li><a href="{% url 'products:index' %}" class="nav-link px-2 link-body-emphasis">Продукт</a></li>
+          <li><a href="{% url 'administrator:index' %}" class="nav-link px-2 link-body-emphasis">Администратор</a></li>
+          <li><a href="{% url 'about:index' %}" class="nav-link px-2 link-body-emphasis">О нас</a></li>
           <li><a href="#exampleModalToggle" class="nav-link px-2 link-body-emphasis btn btn-primary" data-bs-toggle="modal" href="#exampleModalToggle" role="button">Тест</a></li>
         </ul>
 
