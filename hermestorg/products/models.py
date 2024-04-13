@@ -141,6 +141,9 @@ class Card(models.Model):
         help_text="Мета JSON"
     )
 
+    def get_absolute_url(self):
+        return reverse('products:products', kwargs={'pk': self.pk})
+
     def __str__(self):
         return self.title
 
@@ -285,3 +288,90 @@ class Comment(models.Model):
         ordering = ('-pub_date',)
         verbose_name = "Комментарий"
         verbose_name_plural = "Комментарии"
+
+
+class Follow(models.Model):
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='follower',
+        verbose_name='Подписчик',
+        help_text='Подписчик',
+    )
+    author = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='following',
+        verbose_name='Автор подписки',
+        help_text='Автор подписки',
+    )
+    flag = models.BooleanField(
+        default=False,
+        verbose_name='Активен',
+        help_text="Активна подписка или нет"
+    )
+    pub_date = models.DateTimeField(
+        verbose_name='Создано',
+        auto_now_add=True
+    )
+    pub_date_now = models.DateTimeField(
+        verbose_name='Обновлено',
+        auto_now=True
+    )
+
+    def __str__(self):
+        return f"{self.user} подписан на -> {self.author}"
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=('user', 'author'),
+                name='user_and_author_unique'
+            ),
+            models.CheckConstraint(
+                check=~models.Q(author=models.F('user')),
+                name='author_and_user_are_not_the_same'
+            )
+        ]
+        verbose_name = "Подписка"
+        verbose_name_plural = "Подписки"
+
+
+class Favourites(models.Model):
+    user = models.ForeignKey(
+        User,
+        on_delete=models.SET_NULL,
+        null=True,
+        related_name='favouriter',
+        verbose_name='Пользователь',
+        help_text='Выбирите пользователя',
+    )
+    card = models.ForeignKey(
+        Card,
+        on_delete=models.SET_NULL,
+        null=True,
+        related_name='favouriting',
+        verbose_name='Продукт',
+        help_text='Добавьте продукт',
+    )
+    flag = models.BooleanField(
+        default=False,
+        verbose_name='Активен',
+        help_text="Активна избранное или нет"
+    )
+    pub_date = models.DateTimeField(
+        verbose_name='Создано',
+        auto_now_add=True
+    )
+    pub_date_now = models.DateTimeField(
+        verbose_name='Обновлено',
+        auto_now=True
+    )
+
+    def __str__(self):
+        return f"{self.user} добавил в избранное {self.card}"
+
+    class Meta:
+        ordering = ('-pub_date',)
+        verbose_name = "Избранное"
+        verbose_name_plural = "Избранные"

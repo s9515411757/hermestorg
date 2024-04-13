@@ -52,6 +52,9 @@ INSTALLED_APPS = [
     'administrator.apps.AdministratorConfig',
     'mptt',
     "debug_toolbar",
+    'follow.apps.FollowConfig',
+    'favourites.apps.FavouritesConfig',
+    'personal_account.apps.PersonalAccountConfig',
 ]
 
 MIDDLEWARE = [

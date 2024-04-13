@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
-<h1 class="display-1">Продукт</h1>
+<h1 class="display-1">{{ card.card.title }}</h1>
+
 <br>
 <article>
    <ul>
@@ -54,7 +55,32 @@
    </ul>
 </article>
 
-<form action="{% url 'products:add_rating' %}" method="post" name="rating">
+{% if follow_displays %}
+    {% if follow_bool %}
+    <form action="{% url 'products:remove_follow' card.author card.id %}" method="POST">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-outline-primary">Отписаться</button>
+    </form>
+    {% else %}
+    <form action="{% url 'products:add_follow' card.author card.id %}" method="POST">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-outline-primary">Подписаться</button>
+    </form>
+    {% endif %}
+
+    {% if favourites_bool %}
+    <form action="{% url 'products:remove_favourit' card.pk %}" method="POST">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-outline-primary">Удалить из избранного</button>
+    </form>
+    {% else %}
+    <form action="{% url 'products:add_favourit' card.pk %}" method="POST">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-outline-primary">Добавить в избранное</button>
+    </form>
+    {% endif %}
+{% endif %}
+<form action="{% url 'products:add_rating' %}" method="POST" name="rating">
     <b>Рейтинг:</b>
     {% csrf_token %}
     <input type="hidden" value="{{ card.id }}" name="card">
@@ -68,20 +94,19 @@
     <span class="editContent">{{ rating }}</span>
 </form>
 
-    <script>
-const rating = document.querySelector('form[name=rating]');
+<script>
+    const rating = document.querySelector('form[name=rating]');
 
-rating.addEventListener("change", function (e) {
-    // Получаем данные из формы
-    let data = new FormData(this);
-    fetch(`${this.action}`, {
-        method: 'POST',
-        body: data
-    })
-        .then(response => alert("Рейтинг установлен"))
-        .catch(error => alert("Ошибка"))
-});
-
-    </script>
+    rating.addEventListener("change", function (e) {
+        // Получаем данные из формы
+        let data = new FormData(this);
+        fetch(`${this.action}`, {
+            method: 'POST',
+            body: data
+        })
+            .then(response => alert("Рейтинг установлен"))
+            .catch(error => alert("Ошибка"))
+    });
+</script>
 
 {% endblock %}

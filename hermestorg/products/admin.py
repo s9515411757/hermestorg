@@ -1,5 +1,15 @@
 from django.contrib import admin
-from .models import Сurrency, Ip, Card, Category, RatingStar, Rating, Comment
+from .models import (
+    Сurrency,
+    Ip,
+    Card,
+    Category,
+    RatingStar,
+    Rating,
+    Comment,
+    Favourites,
+    Follow
+)
 
 
 @admin.register(Сurrency)
@@ -20,6 +30,7 @@ class СurrencyAdmin(admin.ModelAdmin):
     )
     list_filter = ('pub_date',)
 
+
 @admin.register(Ip)
 class IpAdmin(admin.ModelAdmin):
     list_display = (
@@ -33,6 +44,7 @@ class IpAdmin(admin.ModelAdmin):
         'pub_date_now'
     )
     list_filter = ('pub_date',)
+
 
 @admin.register(Card)
 class CardAdmin(admin.ModelAdmin):
@@ -67,6 +79,7 @@ class CardAdmin(admin.ModelAdmin):
     )
     list_filter = ('pub_date',)
 
+
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
     list_display = (
@@ -85,6 +98,7 @@ class CategoryAdmin(admin.ModelAdmin):
     )
     list_filter = ('pub_date',)
 
+
 @admin.register(RatingStar)
 class RatingStarAdmin(admin.ModelAdmin):
     list_display = (
@@ -98,6 +112,7 @@ class RatingStarAdmin(admin.ModelAdmin):
         'pub_date_now'
     )
     list_filter = ('pub_date',)
+
 
 @admin.register(Rating)
 class RatingAdmin(admin.ModelAdmin):
@@ -116,6 +131,7 @@ class RatingAdmin(admin.ModelAdmin):
         'pub_date_now'
     )
     list_filter = ('pub_date',)
+
 
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
@@ -136,3 +152,39 @@ class CommentAdmin(admin.ModelAdmin):
     list_filter = ('pub_date',)
 
 
+@admin.register(Follow)
+class FollowAdmin(admin.ModelAdmin):
+    list_display = (
+        'user',
+        'author',
+        'flag',
+        'pub_date',
+        'pub_date_now'
+    )
+    search_fields = (
+        'user',
+        'author',
+        'flag',
+        'pub_date',
+        'pub_date_now'
+    )
+    list_filter = ('pub_date',)
+
+
+@admin.register(Favourites)
+class FavouritesAdmin(admin.ModelAdmin):
+    list_display = (
+        'user',
+        'card',
+        'flag',
+        'pub_date',
+        'pub_date_now'
+    )
+    search_fields = (
+        'user',
+        'card',
+        'flag',
+        'pub_date',
+        'pub_date_now'
+    )
+    list_filter = ('pub_date',)
