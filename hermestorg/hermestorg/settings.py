@@ -26,7 +26,13 @@ SECRET_KEY = 'django-insecure-470j$@_u#f*058bsgnqk-+a6d&2ybphdy6_t5lh*)&*fpizp_y
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "127.0.0.1",
+]
+
+INTERNAL_IPS = [
+    "127.0.0.1",
+]
 
 
 # Application definition
@@ -45,6 +51,7 @@ INSTALLED_APPS = [
     'about.apps.AboutConfig',
     'administrator.apps.AdministratorConfig',
     'mptt',
+    "debug_toolbar",
 ]
 
 MIDDLEWARE = [
@@ -55,6 +62,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
 
 ROOT_URLCONF = 'hermestorg.urls'

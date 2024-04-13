@@ -10,9 +10,11 @@ urlpatterns = [
     path('about/', include('about.urls', namespace='about')),
     path('administrator/', include('administrator.urls', namespace='administrator')),
     path('admin/', admin.site.urls),
+
 ]
 
 if settings.DEBUG:
     urlpatterns+= static(
         settings.MEDIA_URL, document_root=settings.MEDIA_ROOT
     )
+    urlpatterns.append(path("__debug__/", include("debug_toolbar.urls")))
