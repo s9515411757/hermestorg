@@ -31,7 +31,7 @@ def products(request, pk):
     card = get_object_or_404(Card, pk=pk)
     ratings = Rating.objects.filter(card=pk)
 
-    result = [rating.star.value for rating in ratings]
+    rating_list = [rating.star.value for rating in ratings]
     ip = get_client_ip(request)
 
     if Ip.objects.filter(ip=ip).exists():
@@ -55,11 +55,16 @@ def products(request, pk):
     else:
         favourites_bool = False
 
+    if rating_list:
+        rating = sum(rating_list) / len(rating_list)
+    else:
+        rating = 0
+
     context = {
         'card': card,
         'number': pk,
         'star_form': RatingForm(),
-        'rating': result,
+        'rating': rating,
         'follow_bool': follow_bool,
         'follow_displays': True if request.user.username != card.author.username else False,
         'favourites_bool': favourites_bool
